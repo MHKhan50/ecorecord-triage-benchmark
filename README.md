@@ -1,5 +1,7 @@
 # EcoRecordTriageBench
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24227218.svg)](https://doi.org/10.5281/zenodo.24227218)
+
 **Tool-using agent triage of citizen-science biodiversity occurrence records**
 
 ## Why this project

@@ -7,6 +7,7 @@ authors:
     given-names: Muzammal
     orcid: "https://orcid.org/0009-0001-2570-5686"
 date-released: 2026-11-14
+doi: 10.5281/zenodo.24227218
 license: MIT
 repository-code: https://github.com/MHKhan50/ecorecord-triage-benchmark
 keywords:
