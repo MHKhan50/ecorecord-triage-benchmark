@@ -1,0 +1,821 @@
+{
+  "bootstrap": {
+    "draws": 2000,
+    "unit": "scenario family (19)"
+  },
+  "configs": {
+    "llama3.1:8b (all tools run)": {
+      "ci95": {
+        "clean_case_specificity": [
+          0.0,
+          1.0
+        ],
+        "exact_issue_set_accuracy": [
+          1.0,
+          1.0
+        ],
+        "invalid_output_rate": [
+          0.0,
+          0.0
+        ],
+        "issue_micro_precision": [
+          1.0,
+          1.0
+        ],
+        "issue_micro_recall": [
+          1.0,
+          1.0
+        ],
+        "observation_rule_on_non_observation_rate": [
+          0.0,
+          1.0
+        ],
+        "tool_precision": [
+          1.0,
+          1.0
+        ],
+        "tool_recall": [
+          1.0,
+          1.0
+        ],
+        "triage_action_accuracy": [
+          0.684211,
+          1.0
+        ],
+        "unsupported_claim_case_rate": [
+          0.0,
+          0.157895
+        ]
+      },
+      "environment": {
+        "finished_utc": "2026-11-14T17:45:33+00:00",
+        "model_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+        "ollama_version": "0.40.16",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "python": "3.9.6",
+        "started_utc": "2026-11-14T17:45:33+00:00"
+      },
+      "family_accuracy": {
+        "captive_or_cultivated": 1.0,
+        "clean_human_observation": 1.0,
+        "coordinate_and_media": 1.0,
+        "coordinate_out_of_range": 1.0,
+        "coordinates_missing": 1.0,
+        "coordinates_non_numeric": 1.0,
+        "date_and_consensus": 0.0,
+        "date_future": 1.0,
+        "date_invalid": 1.0,
+        "date_missing": 1.0,
+        "date_parts_mismatch": 1.0,
+        "identification_insufficient": 1.0,
+        "identification_low_consensus": 1.0,
+        "invalid_basis_of_record": 1.0,
+        "media_missing": 1.0,
+        "specimen_invalid_coordinates": 0.0,
+        "specimen_no_media_no_ids_control": 0.0,
+        "taxon_conflict": 1.0,
+        "zero_coordinate": 1.0
+      },
+      "metrics": {
+        "cases": 114,
+        "clean_case_specificity": 1.0,
+        "exact_issue_set_accuracy": 1.0,
+        "false_positive_clean_case_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "issue_macro_f1": 1.0,
+        "issue_micro_f1": 1.0,
+        "issue_micro_precision": 1.0,
+        "issue_micro_recall": 1.0,
+        "observation_rule_on_non_observation_rate": 0.333333,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "triage_action_accuracy": 0.842105,
+        "unsupported_claim_case_rate": 0.052632
+      },
+      "mode": "all_tools",
+      "model": "llama3.1:8b"
+    },
+    "llama3.1:8b (model picks tools)": {
+      "ci95": {
+        "clean_case_specificity": [
+          0.0,
+          1.0
+        ],
+        "exact_issue_set_accuracy": [
+          1.0,
+          1.0
+        ],
+        "invalid_output_rate": [
+          0.0,
+          0.0
+        ],
+        "issue_micro_precision": [
+          1.0,
+          1.0
+        ],
+        "issue_micro_recall": [
+          1.0,
+          1.0
+        ],
+        "observation_rule_on_non_observation_rate": [
+          0.0,
+          1.0
+        ],
+        "tool_precision": [
+          0.917485,
+          1.0
+        ],
+        "tool_recall": [
+          0.922939,
+          0.992509
+        ],
+        "triage_action_accuracy": [
+          0.578947,
+          0.947368
+        ],
+        "unsupported_claim_case_rate": [
+          0.0,
+          0.157895
+        ]
+      },
+      "environment": {
+        "finished_utc": "2026-11-14T17:45:33+00:00",
+        "model_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+        "ollama_version": "0.40.16",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "python": "3.9.6",
+        "started_utc": "2026-11-14T17:45:33+00:00"
+      },
+      "family_accuracy": {
+        "captive_or_cultivated": 1.0,
+        "clean_human_observation": 1.0,
+        "coordinate_and_media": 1.0,
+        "coordinate_out_of_range": 1.0,
+        "coordinates_missing": 1.0,
+        "coordinates_non_numeric": 0.0,
+        "date_and_consensus": 0.0,
+        "date_future": 1.0,
+        "date_invalid": 1.0,
+        "date_missing": 1.0,
+        "date_parts_mismatch": 1.0,
+        "identification_insufficient": 1.0,
+        "identification_low_consensus": 1.0,
+        "invalid_basis_of_record": 1.0,
+        "media_missing": 1.0,
+        "specimen_invalid_coordinates": 0.0,
+        "specimen_no_media_no_ids_control": 0.0,
+        "taxon_conflict": 1.0,
+        "zero_coordinate": 1.0
+      },
+      "metrics": {
+        "cases": 114,
+        "clean_case_specificity": 1.0,
+        "exact_issue_set_accuracy": 1.0,
+        "false_positive_clean_case_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "issue_macro_f1": 1.0,
+        "issue_micro_f1": 1.0,
+        "issue_micro_precision": 1.0,
+        "issue_micro_recall": 1.0,
+        "observation_rule_on_non_observation_rate": 0.333333,
+        "tool_precision": 0.962477,
+        "tool_recall": 0.960674,
+        "triage_action_accuracy": 0.789474,
+        "unsupported_claim_case_rate": 0.052632
+      },
+      "mode": "selective",
+      "model": "llama3.1:8b"
+    },
+    "llama3.1:8b (no tools)": {
+      "ci95": {
+        "clean_case_specificity": [
+          0.0,
+          0.0
+        ],
+        "exact_issue_set_accuracy": [
+          0.0,
+          0.192982
+        ],
+        "invalid_output_rate": [
+          0.0,
+          0.0
+        ],
+        "issue_micro_precision": [
+          0.083916,
+          0.331492
+        ],
+        "issue_micro_recall": [
+          0.105263,
+          0.5625
+        ],
+        "observation_rule_on_non_observation_rate": [
+          0.0,
+          0.0
+        ],
+        "tool_precision": [
+          0.0,
+          0.0
+        ],
+        "tool_recall": [
+          0.0,
+          0.0
+        ],
+        "triage_action_accuracy": [
+          0.105263,
+          0.473684
+        ],
+        "unsupported_claim_case_rate": [
+          0.0,
+          0.0
+        ]
+      },
+      "environment": {
+        "finished_utc": "2026-11-14T17:49:17+00:00",
+        "mean_seconds_per_new_case": 4.395,
+        "model_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+        "ollama_version": "0.40.16",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "python": "3.9.6",
+        "started_utc": "2026-11-14T17:45:33+00:00"
+      },
+      "family_accuracy": {
+        "captive_or_cultivated": 0.0,
+        "clean_human_observation": 0.0,
+        "coordinate_and_media": 0.0,
+        "coordinate_out_of_range": 0.0,
+        "coordinates_missing": 0.0,
+        "coordinates_non_numeric": 0.0,
+        "date_and_consensus": 0.0,
+        "date_future": 0.0,
+        "date_invalid": 0.0,
+        "date_missing": 0.3333333333333333,
+        "date_parts_mismatch": 0.0,
+        "identification_insufficient": 0.0,
+        "identification_low_consensus": 0.0,
+        "invalid_basis_of_record": 0.0,
+        "media_missing": 0.0,
+        "specimen_invalid_coordinates": 0.0,
+        "specimen_no_media_no_ids_control": 0.0,
+        "taxon_conflict": 1.0,
+        "zero_coordinate": 0.0
+      },
+      "metrics": {
+        "cases": 114,
+        "clean_case_specificity": 0.0,
+        "exact_issue_set_accuracy": 0.070175,
+        "false_positive_clean_case_rate": 1.0,
+        "invalid_output_rate": 0.0,
+        "issue_macro_f1": 0.265126,
+        "issue_micro_f1": 0.249135,
+        "issue_micro_precision": 0.205714,
+        "issue_micro_recall": 0.315789,
+        "observation_rule_on_non_observation_rate": 0.0,
+        "tool_precision": 0.0,
+        "tool_recall": 0.0,
+        "triage_action_accuracy": 0.263158,
+        "unsupported_claim_case_rate": 0.0
+      },
+      "mode": "no_tools",
+      "model": "llama3.1:8b"
+    },
+    "qwen2.5:3b (all tools run)": {
+      "ci95": {
+        "clean_case_specificity": [
+          0.0,
+          1.0
+        ],
+        "exact_issue_set_accuracy": [
+          0.736842,
+          1.0
+        ],
+        "invalid_output_rate": [
+          0.0,
+          0.0
+        ],
+        "issue_micro_precision": [
+          1.0,
+          1.0
+        ],
+        "issue_micro_recall": [
+          0.761905,
+          1.0
+        ],
+        "observation_rule_on_non_observation_rate": [
+          0.0,
+          0.0
+        ],
+        "tool_precision": [
+          1.0,
+          1.0
+        ],
+        "tool_recall": [
+          1.0,
+          1.0
+        ],
+        "triage_action_accuracy": [
+          0.736842,
+          1.0
+        ],
+        "unsupported_claim_case_rate": [
+          0.0,
+          0.263158
+        ]
+      },
+      "environment": {
+        "finished_utc": "2026-11-14T17:45:33+00:00",
+        "model_digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "ollama_version": "0.40.16",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "python": "3.9.6",
+        "started_utc": "2026-11-14T17:45:33+00:00"
+      },
+      "family_accuracy": {
+        "captive_or_cultivated": 1.0,
+        "clean_human_observation": 1.0,
+        "coordinate_and_media": 0.0,
+        "coordinate_out_of_range": 1.0,
+        "coordinates_missing": 1.0,
+        "coordinates_non_numeric": 1.0,
+        "date_and_consensus": 1.0,
+        "date_future": 1.0,
+        "date_invalid": 1.0,
+        "date_missing": 1.0,
+        "date_parts_mismatch": 1.0,
+        "identification_insufficient": 1.0,
+        "identification_low_consensus": 0.0,
+        "invalid_basis_of_record": 1.0,
+        "media_missing": 1.0,
+        "specimen_invalid_coordinates": 1.0,
+        "specimen_no_media_no_ids_control": 0.0,
+        "taxon_conflict": 1.0,
+        "zero_coordinate": 0.0
+      },
+      "metrics": {
+        "cases": 114,
+        "clean_case_specificity": 1.0,
+        "exact_issue_set_accuracy": 0.894737,
+        "false_positive_clean_case_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "issue_macro_f1": 0.904762,
+        "issue_micro_f1": 0.944444,
+        "issue_micro_precision": 1.0,
+        "issue_micro_recall": 0.894737,
+        "observation_rule_on_non_observation_rate": 0.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "triage_action_accuracy": 0.894737,
+        "unsupported_claim_case_rate": 0.105263
+      },
+      "mode": "all_tools",
+      "model": "qwen2.5:3b"
+    },
+    "qwen2.5:3b (model picks tools)": {
+      "ci95": {
+        "clean_case_specificity": [
+          0.0,
+          1.0
+        ],
+        "exact_issue_set_accuracy": [
+          0.578947,
+          0.947368
+        ],
+        "invalid_output_rate": [
+          0.0,
+          0.0
+        ],
+        "issue_micro_precision": [
+          1.0,
+          1.0
+        ],
+        "issue_micro_recall": [
+          0.6,
+          0.947368
+        ],
+        "observation_rule_on_non_observation_rate": [
+          0.0,
+          0.666667
+        ],
+        "tool_precision": [
+          0.88764,
+          1.0
+        ],
+        "tool_recall": [
+          0.827957,
+          0.910112
+        ],
+        "triage_action_accuracy": [
+          0.684211,
+          1.0
+        ],
+        "unsupported_claim_case_rate": [
+          0.0,
+          0.315789
+        ]
+      },
+      "environment": {
+        "finished_utc": "2026-11-14T17:45:33+00:00",
+        "model_digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "ollama_version": "0.40.16",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "python": "3.9.6",
+        "started_utc": "2026-11-14T17:45:33+00:00"
+      },
+      "family_accuracy": {
+        "captive_or_cultivated": 1.0,
+        "clean_human_observation": 1.0,
+        "coordinate_and_media": 0.0,
+        "coordinate_out_of_range": 1.0,
+        "coordinates_missing": 0.0,
+        "coordinates_non_numeric": 0.0,
+        "date_and_consensus": 1.0,
+        "date_future": 1.0,
+        "date_invalid": 1.0,
+        "date_missing": 1.0,
+        "date_parts_mismatch": 1.0,
+        "identification_insufficient": 1.0,
+        "identification_low_consensus": 0.0,
+        "invalid_basis_of_record": 1.0,
+        "media_missing": 1.0,
+        "specimen_invalid_coordinates": 1.0,
+        "specimen_no_media_no_ids_control": 0.0,
+        "taxon_conflict": 1.0,
+        "zero_coordinate": 0.0
+      },
+      "metrics": {
+        "cases": 114,
+        "clean_case_specificity": 1.0,
+        "exact_issue_set_accuracy": 0.789474,
+        "false_positive_clean_case_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "issue_macro_f1": 0.761905,
+        "issue_micro_f1": 0.882353,
+        "issue_micro_precision": 1.0,
+        "issue_micro_recall": 0.789474,
+        "observation_rule_on_non_observation_rate": 0.222222,
+        "tool_precision": 0.950617,
+        "tool_recall": 0.865169,
+        "triage_action_accuracy": 0.842105,
+        "unsupported_claim_case_rate": 0.157895
+      },
+      "mode": "selective",
+      "model": "qwen2.5:3b"
+    },
+    "qwen2.5:3b (no tools)": {
+      "ci95": {
+        "clean_case_specificity": [
+          0.0,
+          0.833333
+        ],
+        "exact_issue_set_accuracy": [
+          0.0,
+          0.236842
+        ],
+        "invalid_output_rate": [
+          0.0,
+          0.0
+        ],
+        "issue_micro_precision": [
+          0.041237,
+          0.257511
+        ],
+        "issue_micro_recall": [
+          0.105263,
+          0.5625
+        ],
+        "observation_rule_on_non_observation_rate": [
+          0.0,
+          1.0
+        ],
+        "tool_precision": [
+          0.0,
+          0.0
+        ],
+        "tool_recall": [
+          0.0,
+          0.0
+        ],
+        "triage_action_accuracy": [
+          0.052632,
+          0.447368
+        ],
+        "unsupported_claim_case_rate": [
+          0.0,
+          0.0
+        ]
+      },
+      "environment": {
+        "finished_utc": "2026-11-14T17:45:33+00:00",
+        "model_digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "ollama_version": "0.40.16",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "python": "3.9.6",
+        "started_utc": "2026-11-14T17:45:33+00:00"
+      },
+      "family_accuracy": {
+        "captive_or_cultivated": 0.0,
+        "clean_human_observation": 0.8333333333333334,
+        "coordinate_and_media": 0.0,
+        "coordinate_out_of_range": 0.0,
+        "coordinates_missing": 0.0,
+        "coordinates_non_numeric": 0.0,
+        "date_and_consensus": 0.0,
+        "date_future": 0.0,
+        "date_invalid": 0.0,
+        "date_missing": 0.0,
+        "date_parts_mismatch": 0.0,
+        "identification_insufficient": 0.0,
+        "identification_low_consensus": 0.0,
+        "invalid_basis_of_record": 0.0,
+        "media_missing": 0.0,
+        "specimen_invalid_coordinates": 0.0,
+        "specimen_no_media_no_ids_control": 0.0,
+        "taxon_conflict": 1.0,
+        "zero_coordinate": 0.0
+      },
+      "metrics": {
+        "cases": 114,
+        "clean_case_specificity": 0.416667,
+        "exact_issue_set_accuracy": 0.096491,
+        "false_positive_clean_case_rate": 0.583333,
+        "invalid_output_rate": 0.0,
+        "issue_macro_f1": 0.16613,
+        "issue_micro_f1": 0.183673,
+        "issue_micro_precision": 0.129496,
+        "issue_micro_recall": 0.315789,
+        "observation_rule_on_non_observation_rate": 1.0,
+        "tool_precision": 0.0,
+        "tool_recall": 0.0,
+        "triage_action_accuracy": 0.245614,
+        "unsupported_claim_case_rate": 0.0
+      },
+      "mode": "no_tools",
+      "model": "qwen2.5:3b"
+    }
+  },
+  "paired": [
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Exact issue set",
+      "metric": "exact_issue_set_accuracy",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -0.157895,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": -0.05263099999999998,
+      "label": "Triage action",
+      "metric": "triage_action_accuracy",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Issue precision",
+      "metric": "issue_micro_precision",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Issue recall",
+      "metric": "issue_micro_recall",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Clean records left clean",
+      "metric": "clean_case_specificity",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Observation rule on specimens",
+      "metric": "observation_rule_on_non_observation_rate",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -1.0,
+        -0.807018
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.929825,
+      "label": "Exact issue set",
+      "metric": "exact_issue_set_accuracy",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -0.842105,
+        -0.315789
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.578947,
+      "label": "Triage action",
+      "metric": "triage_action_accuracy",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -0.916084,
+        -0.668508
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.794286,
+      "label": "Issue precision",
+      "metric": "issue_micro_precision",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -0.894737,
+        -0.4375
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.684211,
+      "label": "Issue recall",
+      "metric": "issue_micro_recall",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -1.0,
+        0.0
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -1.0,
+      "label": "Clean records left clean",
+      "metric": "clean_case_specificity",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -1.0,
+        0.0
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.333333,
+      "label": "Observation rule on specimens",
+      "metric": "observation_rule_on_non_observation_rate",
+      "model": "llama3.1:8b"
+    },
+    {
+      "ci": [
+        -0.263158,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": -0.105263,
+      "label": "Exact issue set",
+      "metric": "exact_issue_set_accuracy",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -0.157895,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": -0.05263200000000001,
+      "label": "Triage action",
+      "metric": "triage_action_accuracy",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Issue precision",
+      "metric": "issue_micro_precision",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -0.27777699999999994,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": -0.105263,
+      "label": "Issue recall",
+      "metric": "issue_micro_recall",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.0,
+      "label": "Clean records left clean",
+      "metric": "clean_case_specificity",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        0.0,
+        0.666667
+      ],
+      "comparison": "selective minus all_tools",
+      "difference": 0.222222,
+      "label": "Observation rule on specimens",
+      "metric": "observation_rule_on_non_observation_rate",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -0.95614,
+        -0.631579
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.798246,
+      "label": "Exact issue set",
+      "metric": "exact_issue_set_accuracy",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -0.850877,
+        -0.447368
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.649123,
+      "label": "Triage action",
+      "metric": "triage_action_accuracy",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -0.958763,
+        -0.742489
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.870504,
+      "label": "Issue precision",
+      "metric": "issue_micro_precision",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -0.789473,
+        -0.35
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.578948,
+      "label": "Issue recall",
+      "metric": "issue_micro_recall",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        -1.0,
+        0.0
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": -0.583333,
+      "label": "Clean records left clean",
+      "metric": "clean_case_specificity",
+      "model": "qwen2.5:3b"
+    },
+    {
+      "ci": [
+        0.0,
+        1.0
+      ],
+      "comparison": "no_tools minus all_tools",
+      "difference": 1.0,
+      "label": "Observation rule on specimens",
+      "metric": "observation_rule_on_non_observation_rate",
+      "model": "qwen2.5:3b"
+    }
+  ]
+}

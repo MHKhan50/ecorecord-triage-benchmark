@@ -26,7 +26,7 @@ The existing infrastructure already supplies mature deterministic flags and comm
 - **H2:** On this small synthetic set, a local LLM agent will have lower issue-set exact match than the deterministic baseline unless its tool plan covers all relevant validator families.
 - **H3:** Including preserved-specimen controls will expose false positives from agents that apply human-observation rules indiscriminately.
 
-These hypotheses are not findings. Model results are added under *Results* once the local run is complete.
+The *Results* section reports what the local run found for each hypothesis.
 
 ## Scope and dataset
 
@@ -100,6 +100,33 @@ python3 -m ecorecord_triage.cli --agent ollama --model qwen2.5:3b --mode selecti
 ```
 
 Ollama version, model digest, Python version and platform are recorded in each `summary.json`.
+
+## Results
+
+Local run on 14 November 2026: MacBook (Apple silicon), Ollama 0.40.16, temperature 0, seed 20261114, 114 records per condition, 912 model calls, no invalid outputs. Values are percentages with 95% cluster-bootstrap intervals over the 19 scenario families. Full tables, paired differences and per-family scores are in [`results/tables.md`](results/tables.md); raw replies are in `outputs/llm/`.
+
+| Metric | llama3.1:8b all tools | llama3.1:8b picks tools | llama3.1:8b no tools | qwen2.5:3b all tools | qwen2.5:3b picks tools | qwen2.5:3b no tools |
+|---|---|---|---|---|---|---|
+| Exact issue set | 100.0 [100.0, 100.0] | 100.0 [100.0, 100.0] | 7.0 [0.0, 19.3] | 89.5 [73.7, 100.0] | 78.9 [57.9, 94.7] | 9.6 [0.0, 23.7] |
+| Triage action | 84.2 [68.4, 100.0] | 78.9 [57.9, 94.7] | 26.3 [10.5, 47.4] | 89.5 [73.7, 100.0] | 84.2 [68.4, 100.0] | 24.6 [5.3, 44.7] |
+| Issue recall | 100.0 | 100.0 | 31.6 | 89.5 | 78.9 | 31.6 |
+| Issue precision | 100.0 | 100.0 | 20.6 | 100.0 | 100.0 | 12.9 |
+| Tool recall (model picks) | | 96.1 [92.3, 99.3] | | | 86.5 [82.8, 91.0] | |
+| Observation rule on specimens | 33.3 | 33.3 | 0.0 | 0.0 | 22.2 | 100.0 |
+
+![Exact issue set and triage action by condition](results/fig_conditions.png)
+
+**What the validators add (RQ1, H2).** Without tools both models almost never return the exact issue set (7.0% and 9.6%) and pick the right action for about a quarter of records. Against the all-tools condition this is a drop of 93.0 [80.7, 100.0] points for llama3.1:8b and 79.8 [63.2, 95.6] points for qwen2.5:3b. Without tools llama3.1:8b flagged every clean record (0% left clean). On this set the validators, not the models, do most of the detection.
+
+**Letting the model choose its checks (RQ2).** llama3.1:8b kept a perfect issue set when it chose its own tools (tool recall 96.1%). qwen2.5:3b skipped more checks (tool recall 86.5%) and its exact issue set fell by 10.5 points [−26.3, 0.0]; it failed every record in the missing-coordinate and non-numeric-coordinate families. The intervals touch zero, so this is a direction, not a settled difference.
+
+**Reading the tools is not the same as applying the policy.** With every tool run, llama3.1:8b returned the correct issue set for all 114 records but the correct action for only 84.2%. The misses were three whole families: the specimen control, the specimen with an invalid coordinate, and a record with both a date mismatch and low identification consensus. qwen2.5:3b, the smaller model, had the higher action accuracy with all tools (89.5%), and its misses came from issues it did not report (zero coordinate, low consensus, coordinate plus media).
+
+**Specimen controls (RQ3, H3).** For the 18 records that are not human observations (12 preserved specimens and 6 with an unrecognised record type), llama3.1:8b's own issue list (before the tool filter) contained an observation-only issue such as missing media for a third of them in both tool conditions; without tools, qwen2.5:3b did so for all 18. The tool filter removed these from the reported issues, but no configuration reached the correct action on the specimen control family. The data support H3 at the level of the model's own list. With only three such families the intervals span 0 to 100, so the rate itself is not precise.
+
+**Rule baseline (H1).** The all-checks rule agent scored 100% on every metric, confirming the pipeline; this is a software check, not a model result.
+
+These are results on a small synthetic fixture with two models, one seed and one machine. They describe behaviour under controlled perturbations and should not be read as performance on real occurrence records.
 
 ## Experiment protocol for a publishable extension
 

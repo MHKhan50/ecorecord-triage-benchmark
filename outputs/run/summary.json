@@ -2,10 +2,10 @@
   "agent": "rules",
   "benchmark": "EcoRecordTriageBench",
   "environment": {
-    "finished_utc": "2026-11-14T15:57:32+00:00",
-    "platform": "Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
-    "python": "3.13.18",
-    "started_utc": "2026-11-14T15:57:32+00:00"
+    "finished_utc": "2026-11-14T17:45:33+00:00",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.9.6",
+    "started_utc": "2026-11-14T17:45:33+00:00"
   },
   "metrics": {
     "cases": 114,

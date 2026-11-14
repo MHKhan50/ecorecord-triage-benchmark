@@ -1,0 +1,35 @@
+{
+  "agent": "ollama",
+  "benchmark": "EcoRecordTriageBench",
+  "environment": {
+    "finished_utc": "2026-11-14T17:45:33+00:00",
+    "model_digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+    "ollama_version": "0.40.16",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.9.6",
+    "started_utc": "2026-11-14T17:45:33+00:00"
+  },
+  "metrics": {
+    "cases": 114,
+    "clean_case_specificity": 1.0,
+    "exact_issue_set_accuracy": 0.789474,
+    "false_positive_clean_case_rate": 0.0,
+    "invalid_output_rate": 0.0,
+    "issue_macro_f1": 0.761905,
+    "issue_micro_f1": 0.882353,
+    "issue_micro_precision": 1.0,
+    "issue_micro_recall": 0.789474,
+    "observation_rule_on_non_observation_rate": 0.222222,
+    "tool_precision": 0.950617,
+    "tool_recall": 0.865169,
+    "triage_action_accuracy": 0.842105,
+    "unsupported_claim_case_rate": 0.157895
+  },
+  "mode": "selective",
+  "model": "qwen2.5:3b",
+  "note": "Synthetic controlled benchmark results; not evidence of field performance.",
+  "seed": 20261114,
+  "synthetic_cases": 114,
+  "temperature": 0.0,
+  "version": "0.1.0"
+}
