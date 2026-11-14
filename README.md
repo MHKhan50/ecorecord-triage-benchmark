@@ -1,8 +1,6 @@
-# EcoRecordTriageBench v0.1.0
+# EcoRecordTriageBench
 
 **Tool-using agent triage of citizen-science biodiversity occurrence records**
-
-Suggested repository: `MHKhan50/ecorecord-triage-benchmark`
 
 ## Why this project
 
@@ -28,7 +26,7 @@ The existing infrastructure already supplies mature deterministic flags and comm
 - **H2:** On this small synthetic set, a local LLM agent will have lower issue-set exact match than the deterministic baseline unless its tool plan covers all relevant validator families.
 - **H3:** Including preserved-specimen controls will expose false positives from agents that apply human-observation rules indiscriminately.
 
-These hypotheses are not findings. No LLM experiment has been run as part of this release.
+These hypotheses are not findings. Model results are added under *Results* once the local run is complete.
 
 ## Scope and dataset
 
@@ -50,13 +48,20 @@ The agent receives one record and a menu of five read-only local tools:
 4. `check_verifiability`
 5. `check_identification`
 
-The optional Ollama adapter has two stages: (a) select validator tools using a constrained JSON plan; (b) execute the selected tools locally and return issue codes plus a triage action using a second constrained JSON output. The model cannot mutate records or access the network through tools. The deterministic baseline invokes every validator applicable to the record type; human observations use all five, while specimen/non-observation records skip iNaturalist-specific media and community-identification checks.
+Local models run through Ollama with JSON-schema output in three conditions:
+
+| Condition | What the model does | What it isolates |
+|---|---|---|
+| `all_tools` | every validator applicable to the record type runs; the model reads their outputs and returns issue codes and an action | reading tool output and applying the triage policy |
+| `selective` | the model first chooses which validators to run, the chosen ones run locally, then it returns issue codes and an action | the cost of letting the model plan its own checks |
+| `no_tools` | the model reads the record and the issue definitions and returns issue codes and an action with no tool | what the validators add |
+
+With tools, the reported issue list is restricted to issues the tools actually returned; the model's own list before that filter is kept, so unsupported claims can be counted. The model cannot change records or reach the network. The deterministic `rules` baseline runs every validator applicable to the record type: human observations use all five, while specimens and other record types skip the iNaturalist-style media and identification checks.
 
 ### Baselines
 
-- **All-checks rule agent:** invokes all five validators and applies the published triage precedence.
-- **Ollama tool-using agent:** optional local model adapter; no model results are supplied in this release.
-- **Ablations to add in a later study:** no-tool LLM, random tool selection, and oracle tool selection. Do not compare models until prompts, model hashes, seeds, and run counts are frozen.
+- **All-checks rule agent:** runs the applicable validators and applies the triage policy. Its perfect score is a check of the software, not a model result.
+- **Model conditions:** `qwen2.5:3b` and `llama3.1:8b`, temperature 0, at most 256 output tokens per call.
 
 ### Metrics
 
@@ -65,9 +70,10 @@ The optional Ollama adapter has two stages: (a) select validator tools using a c
 - exact issue-set accuracy;
 - triage-action accuracy;
 - clean-case specificity and false-positive clean-case rate;
-- tool precision and tool recall against the validator families applicable to each record type.
+- tool precision and tool recall against the validator families applicable to each record type;
+- invalid-output rate, unsupported-issue claims, and how often a non-observation record (a preserved specimen) is given a media, captive or identification issue by the model's own list.
 
-Report per-issue confusion counts and bootstrap confidence intervals in a substantive paper. With only 114 synthetic cases, aggregate point estimates are descriptive and should not be generalised to field records.
+`scripts/analysis.py` reports 95% cluster-bootstrap intervals that resample the 19 scenario families (the six variants of a family are near copies), paired differences between conditions of the same model, and accuracy for every family. With 114 synthetic cases these are descriptive and should not be generalised to field records.
 
 ## Reproduction
 
@@ -79,14 +85,21 @@ python3 scripts/generate_dataset.py
 python3 -m ecorecord_triage.cli --agent rules --output-dir outputs/rules
 ```
 
-Optional local model run (requires Ollama and a locally available model):
+Full model study (needs [Ollama](https://ollama.com) with `qwen2.5:3b` and `llama3.1:8b`; 912 model calls):
 
 ```bash
-ollama pull qwen2.5:3b
-python3 -m ecorecord_triage.cli --agent ollama --model qwen2.5:3b --temperature 0 --seed 20261114 --output-dir outputs/qwen25-3b
+python3 -m venv .venv && source .venv/bin/activate
+pip install matplotlib            # charts only
+./scripts/run_all.sh
 ```
 
-The Ollama adapter uses the local `/api/generate` endpoint and JSON Schema output. Model outputs can vary by Ollama/model version; record the exact model tag, Ollama version and run environment with any published results.
+Each record is saved to `outputs/llm/<model>_<condition>/calls.jsonl` as it finishes; if the run stops, run the same command again and it continues. Results go to `results/tables.md`, `results/results.json` and `results/fig_conditions.png`. One condition on its own:
+
+```bash
+python3 -m ecorecord_triage.cli --agent ollama --model qwen2.5:3b --mode selective
+```
+
+Ollama version, model digest, Python version and platform are recorded in each `summary.json`.
 
 ## Experiment protocol for a publishable extension
 
@@ -118,6 +131,10 @@ The Ollama adapter uses the local `/api/generate` endpoint and JSON Schema outpu
 - Respect iNaturalist observation-level licences and GBIF dataset licences; do not assume all records are freely redistributable.
 - The current dataset is synthetic and contains no personal data.
 
+## Issue codes
+
+Where GBIF has an equivalent flag the same name is used (`BASIS_OF_RECORD_INVALID`, `COORDINATE_OUT_OF_RANGE`, `ZERO_COORDINATE`, `RECORDED_DATE_INVALID`, `RECORDED_DATE_MISMATCH`). The others are benchmark codes: GBIF's nearest flags are `COORDINATE_INVALID` (here `COORDINATES_INVALID`) and `RECORDED_DATE_UNLIKELY`, which covers future and very old dates (here `RECORDED_DATE_FUTURE` covers future dates only). Missing coordinates or dates, media, captive status and identification issues come from iNaturalist's Data Quality Assessment, not from GBIF flags.
+
 ## Data dictionary and project files
 
 See [`docs/LITERATURE_REVIEW.md`](docs/LITERATURE_REVIEW.md), [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md), [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md) and [`data/DATA_CARD.md`](data/DATA_CARD.md).
@@ -128,10 +145,10 @@ See [`docs/LITERATURE_REVIEW.md`](docs/LITERATURE_REVIEW.md), [`docs/DATA_DICTIO
 2. GBIF, Occurrence issues and flags: https://techdocs.gbif.org/en/data-use/occurrence-issues-and-flags
 3. iNaturalist, Data Quality Assessment and Research Grade criteria: https://help.inaturalist.org/en/support/solutions/articles/151000169936
 4. iNaturalist, Community Taxon and Observation Taxon definitions and algorithm: https://help.inaturalist.org/en/support/solutions/articles/151000173076
-5. Johnston et al. (2023), “Identifying the identifiers: How iNaturalist facilitates collaborative, research-relevant data generation and why it matters for biodiversity science,” *BioScience*: https://doi.org/10.1093/biosci/biad051
-6. Dorm et al. (2026), “Large language models possess some ecological knowledge, but how much?”, *Ecological Informatics*, 95, 103699: https://doi.org/10.1016/j.ecoinf.2026.103699
+5. Campbell, C. J., Barve, V., Belitz, M. W., Doby, J. R., White, E., Seltzer, C., Di Cecco, G., Hurlbert, A. H. and Guralnick, R. (2023), “Identifying the identifiers: How iNaturalist facilitates collaborative, research-relevant data generation and why it matters for biodiversity science,” *BioScience*, 73(7), 533–541: https://doi.org/10.1093/biosci/biad051
+6. Dorm, F., Millard, J., Purves, D., Harfoot, M. and Mac Aodha, O. (2026), “Large language models possess some ecological knowledge, but how much?”, *Ecological Informatics*, 95, 103699: https://doi.org/10.1016/j.ecoinf.2026.103699
 7. GBIF, data-quality handling guide: https://training.gbif.org/en/data-use/data-quality
 
-## License
+## Licence and citation
 
-Code: MIT. Synthetic dataset: CC0-1.0. See `LICENSE` and `data/DATA_CARD.md`.
+Code: MIT. Synthetic dataset: CC0-1.0. See `LICENSE`, `data/DATA_CARD.md` and `CITATION.cff`.

@@ -7,8 +7,12 @@ Measure whether an LLM agent can select and compose deterministic occurrence-rec
 ## Experimental conditions
 
 1. `rules`: all validators applicable to the record type invoked, deterministic issue aggregation.
-2. `ollama`: model-selected tool plan, local tool execution, model-generated final issue set and action.
-3. Future ablations (not implemented in v0.1.0): no-tool model, random tool plan, oracle tool plan.
+2. `ollama --mode all_tools`: oracle tool plan (every applicable validator runs); the model returns issues and an action from the outputs.
+3. `ollama --mode selective`: the model chooses the tools, then returns issues and an action from their outputs.
+4. `ollama --mode no_tools`: the model returns issues and an action from the record and the issue definitions alone.
+5. Not implemented: random tool plan.
+
+Models: `qwen2.5:3b` and `llama3.1:8b`, temperature 0, seed 20261114, at most 256 output tokens per call. With temperature 0 there is no sampling, so one run per condition is reported; repeats would test only determinism.
 
 ## Controls
 
@@ -24,7 +28,7 @@ Report the exact dataset hash, Python version, OS, Ollama version, model digest/
 
 ## Statistical analysis
 
-For the current 114-case release, report descriptive metrics only. For a future expert-labelled real-record track, use paired comparisons on the same held-out records, bootstrap confidence intervals stratified by issue family, and appropriate correction for multiple metric comparisons. Report inter-annotator agreement and adjudication procedure.
+For the current 114-case release, `scripts/analysis.py` reports point estimates with 95% cluster-bootstrap intervals over the 19 scenario families (2,000 draws), and paired differences between conditions of the same model using the same draws. These are descriptive. For a future expert-labelled real-record track, use paired comparisons on the same held-out records, bootstrap confidence intervals stratified by issue family, and appropriate correction for multiple metric comparisons. Report inter-annotator agreement and adjudication procedure.
 
 ## Stopping and safety
 

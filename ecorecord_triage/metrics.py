@@ -1,6 +1,10 @@
 """Metrics for issue detection, triage action selection and tool coverage."""
 from .constants import ISSUE_CODES, required_tools_for_record
 
+# Issues that only exist for HumanObservation records (iNaturalist-style checks).
+OBSERVATION_ONLY = {"MEDIA_MISSING", "CAPTIVE_OR_CULTIVATED", "INSUFFICIENT_IDENTIFICATIONS",
+                    "LOW_IDENTIFICATION_CONSENSUS", "TAXON_CONFLICT"}
+
 
 def _safe_div(numerator, denominator):
     return numerator / float(denominator) if denominator else 0.0
@@ -15,6 +19,8 @@ def evaluate(cases, predictions):
     clean_total = clean_correct = 0
     false_positive_cases = 0
     tool_tp = tool_fp = tool_fn = 0
+    invalid = unsupported_cases = 0
+    non_obs = non_obs_wrong_rule = 0
 
     for case in cases:
         pred = by_id[case["case_id"]]
@@ -30,6 +36,13 @@ def evaluate(cases, predictions):
             clean_correct += int(not actual)
         if not expected and actual:
             false_positive_cases += 1
+
+        invalid += int(pred.get("valid_output", True) is False or pred.get("triage_action") == "INVALID")
+        raw = set(pred.get("raw_issue_codes", actual))
+        unsupported_cases += int(bool(raw - actual))
+        if case["record"].get("basisOfRecord") != "HumanObservation":
+            non_obs += 1
+            non_obs_wrong_rule += int(bool(raw & OBSERVATION_ONLY))
 
         expected_tools = set(required_tools_for_record(case["record"]))
         called_tools = set(pred.get("tool_calls", []))
@@ -68,4 +81,7 @@ def evaluate(cases, predictions):
         "false_positive_clean_case_rate": round(_safe_div(false_positive_cases, clean_total), 6),
         "tool_precision": round(tool_precision, 6),
         "tool_recall": round(tool_recall, 6),
+        "invalid_output_rate": round(_safe_div(invalid, len(cases)), 6),
+        "unsupported_claim_case_rate": round(_safe_div(unsupported_cases, len(cases)), 6),
+        "observation_rule_on_non_observation_rate": round(_safe_div(non_obs_wrong_rule, non_obs), 6),
     }

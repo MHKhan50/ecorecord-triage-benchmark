@@ -22,11 +22,11 @@ The proposed contribution is therefore deliberately modest: a transparent, synth
 
 ## Portfolio overlap assessment
 
-The project is distinct in task and application domain from the user's listed agent reliability, memory, cancellation, retry, pagination, policy and decomposition benchmarks, and from their Pakistan climate, water, flood, air-quality, price and agriculture projects. It does not reuse those datasets or rename their research questions. The shared high-level use of an agent benchmark is a research-method pattern, not a substantive task overlap.
+The project is distinct in task and application domain from the author's earlier agent reliability, memory, cancellation, retry, pagination, policy and decomposition benchmarks, and from their Pakistan climate, water, flood, air-quality, price and agriculture projects. It does not reuse those datasets or rename their research questions. The shared high-level use of an agent benchmark is a research-method pattern, not a substantive task overlap.
 
 ## Feasibility
 
-The v0.1.0 package uses Python's standard library, 114 synthetic records, five small deterministic tools and an optional two-stage Ollama adapter. No fine-tuning, vector database, GIS stack, GPU, image model or external API is required for the baseline. This is compatible with a 16 GB MacBook Air development workflow. The package is a pilot research instrument only; credible empirical claims require expert-reviewed real records, source-specific licences, careful location handling and a broader held-out evaluation.
+The v0.1.0 package uses Python's standard library, 114 synthetic records, five small deterministic tools and an optional two-stage Ollama adapter. No fine-tuning, vector database, GIS stack, GPU, image model or external API is required for the baseline. It runs on a 16 GB laptop. The package is a pilot research instrument only; credible empirical claims require expert-reviewed real records, source-specific licences, careful location handling and a broader held-out evaluation.
 
 ## Sources
 

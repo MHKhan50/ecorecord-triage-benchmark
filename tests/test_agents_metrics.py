@@ -43,13 +43,36 @@ class AgentMetricTests(unittest.TestCase):
             {"issue_codes": ["RECORDED_DATE_INVALID", "MADE_UP"], "triage_action": "REQUEST_CORRECTION"},
         ]
         def fake_generate(prompt, schema):
-            return calls.pop(0)
+            return calls.pop(0), "{}", 0.01
         record = build_dataset()[36]["record"]
         with patch.object(agent, "_generate", side_effect=fake_generate):
             result = agent.run(record)
         self.assertEqual(result["tool_calls"], ["check_dates"])
         self.assertEqual(result["issue_codes"], ["RECORDED_DATE_INVALID"])
         self.assertEqual(result["triage_action"], "REQUEST_CORRECTION")
+        self.assertTrue(result["valid_output"])
+
+    def test_three_modes_use_tools_as_designed(self):
+        cases = build_dataset()
+        specimen = next(c["record"] for c in cases if c["scenario_family"] == "specimen_no_media_no_ids_control")
+        answer = {"issue_codes": ["MEDIA_MISSING"], "triage_action": "REQUEST_CORRECTION"}
+        for mode, expected_tools, expected_issues in [
+                ("all_tools", ["check_basis_of_record", "check_coordinates", "check_dates"], []),
+                ("no_tools", [], ["MEDIA_MISSING"])]:
+            agent = OllamaAgent(mode=mode)
+            with patch.object(agent, "_generate", return_value=(dict(answer), "{}", 0.01)) as gen:
+                result = agent.run(specimen)
+            self.assertEqual(gen.call_count, 1)
+            self.assertEqual(result["tool_calls"], expected_tools)
+            self.assertEqual(result["issue_codes"], expected_issues)  # unsupported claim filtered with tools
+            self.assertEqual(result["raw_issue_codes"], ["MEDIA_MISSING"])
+
+    def test_unreadable_reply_is_invalid(self):
+        agent = OllamaAgent(mode="no_tools")
+        with patch.object(agent, "_generate", return_value=(None, "not json", 0.01)):
+            result = agent.run(build_dataset()[0]["record"])
+        self.assertFalse(result["valid_output"])
+        self.assertEqual(result["triage_action"], "INVALID")
 
     def test_schema_vocabularies_are_consistent(self):
         self.assertEqual(len(TOOL_NAMES), len(set(TOOL_NAMES)))
