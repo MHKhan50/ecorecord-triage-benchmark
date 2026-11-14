@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+outputs/*
+!outputs/.gitkeep
+!outputs/run/
+!outputs/run/summary.json
+!outputs/run/per_case.csv
+*.egg-info/
+build/
+dist/
+.DS_Store

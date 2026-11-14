@@ -1,0 +1,20 @@
+{
+  "agent": "rules",
+  "benchmark": "EcoRecordTriageBench",
+  "metrics": {
+    "cases": 114,
+    "clean_case_specificity": 1.0,
+    "exact_issue_set_accuracy": 1.0,
+    "false_positive_clean_case_rate": 0.0,
+    "issue_macro_f1": 1.0,
+    "issue_micro_f1": 1.0,
+    "issue_micro_precision": 1.0,
+    "issue_micro_recall": 1.0,
+    "tool_precision": 1.0,
+    "tool_recall": 1.0,
+    "triage_action_accuracy": 1.0
+  },
+  "note": "Synthetic controlled benchmark results; not evidence of field performance.",
+  "synthetic_cases": 114,
+  "version": "0.1.0"
+}
