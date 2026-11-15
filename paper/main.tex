@@ -37,14 +37,16 @@ with a case, and applying a written policy to decide what happens next. We test 
 \code{llama3.1:8b} and \code{qwen2.5:3b}, keep the two parts apart, using two controlled synthetic benchmarks
 with the same models, machine and decoding settings. In EcoRecordTriageBench (114 biodiversity occurrence
 records), the models read the output of deterministic validators and choose a curator action. With every
-validator run, \code{llama3.1:8b} reported the exact issue set for all 114 records but chose the correct action
+validator run, \code{llama3.1:8b} reported the exact issue set for all 114 records (94.7\% before its list was filtered to
+the validators' findings) but chose the correct action
 for 84.2\% (95\% cluster-bootstrap CI 68.4--100); with no validators, exact issue sets fell to 7.0\% and
 9.6\%, and both models sent about three quarters of records to expert review. In ProcureGateBench (96 pre-award
 tender cases), \code{llama3.1:8b} flagged red-flag indicators with F1 93.0\% but made the correct decision in
 68.8\% of cases and checked the procurement gates in the correct order in 29.2\%; no model ever asserted
 misconduct or recommended an award. A shorter prompt made 46.9\% of \code{qwen2.5:3b}'s replies unreadable. In a
-post-hoc analysis, applying the four-line triage policy in code to \code{llama3.1:8b}'s own issue lists raised
-action accuracy from 84.2\% to 100\% (difference 15.8 points, CI 0.0--31.6). Across both tasks the models were
+post-hoc analysis, applying the four-line triage policy in code to \code{llama3.1:8b}'s reported issues raised
+action accuracy from 84.2\% to 100\% (difference 15.8 points, CI 0.0--31.6), showing that every one of its wrong
+actions arose in the decision step. Across both tasks the models were
 better at detecting than at deciding, and worst at following an ordered procedure. For small local agents in
 rule-bound triage, detection can be delegated to tools and read by the model, but policy and process order are
 safer enforced in code. All cases, prompts, raw replies and analysis scripts are public.
@@ -123,7 +125,9 @@ otherwise any identification issue~$\rightarrow$~community identification; other
 Each model runs in three conditions: \emph{all tools} (every applicable validator runs and the model reads the
 outputs), \emph{model picks tools} (the model chooses the validators first) and \emph{no tools} (the model reads
 the record and the issue definitions). With tools, reported issues are restricted to those the tools returned;
-the model's own list before that filter is kept.
+the model's own list before that filter is kept. In the tool conditions, detection therefore means transcribing the
+validators' findings: the filter guarantees issue precision, and errors can only be omissions, while unsupported
+claims are counted on the unfiltered list.
 
 \subsection{ProcureGateBench}
 
@@ -134,7 +138,9 @@ jurisdiction-neutral policy says: stop and hold for incomplete documents or an u
 stop and exclude for ineligibility or failed technical compliance; otherwise check the price and pass the bid to
 a human. Red flags must be reported for closer review but must not change the decision, and the agent must never
 assert misconduct or make an award. The hard-gate facts are given as explicit fields, so detection requires no
-inference beyond reading. Six cases share each gate profile, so a decision that differs from the no-flag case in
+inference beyond reading. Red-flag indicators appear as structured fields and short notes (for
+example a bid count of one, or a response window under ten days), so flagging them requires reading and applying a
+threshold rather than inference. Six cases share each gate profile, so a decision that differs from the no-flag case in
 the same group is \emph{soft-signal leakage}. Models run with a \emph{full} prompt that spells out the policy
 and a \emph{compact} one-paragraph prompt.
 
@@ -154,7 +160,9 @@ both benchmarks; this checks the software and is not a model result.
 
 Figure~\ref{fig:detect} puts the two benchmarks side by side for each model in its best setting (all tools; full
 prompt). \code{llama3.1:8b} detected almost perfectly in both: the exact issue set for all 114 records and red-flag
-F1 of 93.0\% (CI 90.3--95.5). Its decisions were weaker: 84.2\% correct actions (68.4--100) and 68.8\% correct
+F1 of 93.0\% (CI 90.3--95.5). Before the tool filter, its own list contained an issue that no tool had reported
+in 5.3\% of records (10.5\% for \code{qwen2.5:3b}); on the unfiltered lists the exact issue set was 94.7\% for
+\code{llama3.1:8b} and 84.2\% for \code{qwen2.5:3b}, so its raw reading of the tool outputs was good but not perfect. Its decisions were weaker: 84.2\% correct actions (68.4--100) and 68.8\% correct
 procurement decisions (47.9--87.5). \code{qwen2.5:3b} detected less well (89.5\% exact issue sets; flag F1 79.4\%)
 but its decisions tracked its detection more closely (89.5\% and 82.3\%). In both tasks, following the ordered
 procedure was the weakest step: the procurement stages were listed in the exact required order in 29.2\% of
@@ -203,10 +211,10 @@ routed to correction instead of community identification, and the specimen contr
 configuration chose the correct action for the specimen control family.
 
 In ProcureGateBench the decision errors took a different but equally systematic form. When a red flag changed
-\code{llama3.1:8b}'s decision (12.5\% of flagged cases), it was almost always towards caution: 27 of 30 changes
+\code{llama3.1:8b}'s decision (12.5\% of flagged cases), it was almost always towards caution: 9 of the 10 changed cases
 turned an exclusion into a hold, most often when all four flags were present (31.2\% of those cases). When it
-changed \code{qwen2.5:3b}'s decision (6.2\%), 12 of 15 changes excluded a bid that should have gone to a human
-reviewer. Neither model asserted misconduct or recommended an award in any case, against 83.3\% misconduct
+changed \code{qwen2.5:3b}'s decision (6.2\%, 5 cases), 4 of the 5 excluded a bid that should have gone to a human
+reviewer. The three repeats were identical, so each case is counted once. Neither model asserted misconduct or recommended an award in any case, against 83.3\% misconduct
 claims for a deliberately unsafe baseline that excludes on any red flag.
 
 \subsection{The policy in code}
@@ -218,6 +226,10 @@ issues (Figure~\ref{fig:code}). For \code{llama3.1:8b} action accuracy rose from
 For \code{qwen2.5:3b} it rose from 89.5\% to 94.7\% with all tools (5.3, $-10.5$ to 26.3) and did not change when
 it chose its tools (84.2\%), because there its errors were missed issues, which no policy can repair. Without
 tools, applying the policy in code did not help (26.3\% and 9.6\%), because the issue lists themselves were wrong.
+Because the reported issues in the tool conditions are filtered to the validators' findings, this analysis comes close
+to the rule agent by construction when no issue is omitted. Its value is diagnostic: it shows that, for
+\code{llama3.1:8b}, everything needed for the correct action was already in what the model reported, so the errors
+were in applying the policy, not in reading the tools.
 
 \begin{figure}[t]
   \centering
@@ -252,6 +264,7 @@ Measure & \code{llama3.1:8b} & \code{qwen2.5:3b} \\
 Exact issue set, all tools & 100.0 [100.0, 100.0] & 89.5 [73.7, 100.0] \\
 Exact issue set, model picks tools & 100.0 [100.0, 100.0] & 78.9 [57.9, 94.7] \\
 Exact issue set, no tools & 7.0 [0.0, 19.3] & 9.6 [0.0, 23.7] \\
+Exact issue set before tool filter, all tools & 94.7 & 84.2 \\
 Correct action, all tools & 84.2 [68.4, 100.0] & 89.5 [73.7, 100.0] \\
 Correct action, policy in code (post hoc) & 100.0 & 94.7 \\
 Escalated to expert review, no tools & 73.7 & 71.9 \\
