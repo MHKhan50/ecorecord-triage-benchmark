@@ -178,6 +178,19 @@ See [`docs/LITERATURE_REVIEW.md`](docs/LITERATURE_REVIEW.md), [`docs/DATA_DICTIO
 6. Dorm, F., Millard, J., Purves, D., Harfoot, M. and Mac Aodha, O. (2026), “Large language models possess some ecological knowledge, but how much?”, *Ecological Informatics*, 95, 103699: https://doi.org/10.1016/j.ecoinf.2026.103699
 7. GBIF, data-quality handling guide: https://training.gbif.org/en/data-use/data-quality
 
+## How to cite
+
+```bibtex
+@misc{hussain2026ecorecord,
+  author    = {Hussain, Muzammal},
+  title     = {{Seeing the Problem Is Not Following the Policy: Small Local LLM Agents in Two Rule-Bound Triage Tasks}},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.24227218},
+  url       = {https://doi.org/10.5281/zenodo.24227218}
+}
+```
+
 ## Licence and citation
 
 Code: MIT. Synthetic dataset: CC0-1.0. See `LICENSE`, `data/DATA_CARD.md` and `CITATION.cff`.
