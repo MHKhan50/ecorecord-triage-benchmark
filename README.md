@@ -186,10 +186,12 @@ See [`docs/LITERATURE_REVIEW.md`](docs/LITERATURE_REVIEW.md), [`docs/DATA_DICTIO
   title     = {{Seeing the Problem Is Not Following the Policy: Small Local LLM Agents in Two Rule-Bound Triage Tasks}},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.24227218},
-  url       = {https://doi.org/10.5281/zenodo.24227218}
+  doi       = {10.5281/zenodo.24509189},
+  url       = {https://doi.org/10.5281/zenodo.24509189}
 }
 ```
+
+Software (code, notebooks, results): [doi:10.5281/zenodo.24227218](https://doi.org/10.5281/zenodo.24227218).
 
 ## Licence and citation
 
